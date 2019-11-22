@@ -1,0 +1,5 @@
+ou might see a big green button at the bottom that says 'Merge pull request'. Clicking this means you'll merge your changes into the master branch.
+
+Note that this button won't always be green. In some cases it'll be grey, which means you're faced with a merge conflict. This is when there is a change in one file that conflicts with a change in another file and git can't figure out which version to use. You'll have to manually go in and tell git which version to use.
+
+Sometimes you'll be a co-owner or the sole owner of a repo,
