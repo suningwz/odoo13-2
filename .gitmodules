@@ -1,0 +1,4 @@
+[submodule "Appscom/odoo13"]
+	path = Appscom/odoo13
+	url = git@github.com:Appscom/odoo13.git
+	branch = submodule
