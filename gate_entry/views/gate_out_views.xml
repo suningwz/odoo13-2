@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="gate_out_view_form">
+            <field name="name">gate out entry</field>
+            <field name="model">gate.out</field>
+            <field name="arch" type="xml">
+                 <form name="gate_out_pass_info" string="Gatepass Details">
+                     <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                     <group col="4" colspan="4">
+                        <field name="user_id"/>
+                        <field name="date"/>
+                        <field name="stock_picking_id" domain="[('picking_type_code','=','outgoing')]"/>
+                        <field name="supplier_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}'/>
+                        <field name="stock_picking_date"/>
+                        <field name="supplier_phone"/>
+                        <field name="supplier_email"/>
+                        <field name="origin"/>
+                     </group>
+                     <notebook>
+                       <page string="Item Description">
+                         <field name="stock_picking_line_ids">
+                            <tree editable="bottom">
+                              <field name="product_id"/>
+                              <field name="product_uom"/>
+                              <field name="product_qty"/>
+                              <field name="product_done_qty"/>
+                            </tree>
+                         </field>
+                         <group col="4" colspan="4">
+                             <field name="vehicle_no" />
+                             <field name="vehicle_driver_name"/>
+                             <field name="driver_contact_number"/>
+                            <!-- <field name="corresponding_company"/>-->
+                         </group>
+                         <group><field name="notes" class="oe_inline" placeholder="Define your notes ..."/></group>
+                       </page>
+                       <page string="Additonal Info">
+                        <group col="4" colspan="4">
+                         <field name="location_type_id"/>
+                        <field name="location_id"/>
+                        </group>
+                       </page>
+                     </notebook>
+                 </form>
+            </field>
+         </record>
+         <record model="ir.ui.view" id="gate_out_view_tree">
+            <field name="name">gate out entry</field>
+            <field name="model">gate.out</field>
+            <field name="arch" type="xml">
+                 <tree name="gate_out_pass_info" string="Gatepass Details">
+                      <field name="name"/>
+                       <field name="date"/>
+                       <field name="supplier_id"/>
+                       <field name="stock_picking_id"/>
+                       <field name="stock_picking_date"/>
+                 </tree>
+            </field>
+         </record>
+         <record model="ir.actions.act_window" id="gate_out_action">
+            <field name="name">Gate Out</field>
+            <field name="res_model">gate.out</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            
+        </record>
+        
+        <menuitem id="gate_out" name="Gate Out" parent="gate_entry.gate_root"
+                  action="gate_out_action" sequence="3"/>
+    </data>
+</odoo>
