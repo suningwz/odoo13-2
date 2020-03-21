@@ -32,6 +32,7 @@
                        <strong>Source Doc: </strong><t t-if="o.origin">
                        <span t-field="o.origin"/></t>
                      </div><br/> 
+                       <div >
                      <strong>Warehouse: </strong><t t-if="o.location_type_id">
                        <span t-field="o.location_type_id"/></t>
                      </div><br/>    
@@ -46,7 +47,7 @@
                          <div t-if="o.supplier_id">
                          <div t-field="o.supplier_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
                            </div><br/>
-                      <div >
+                      
                        
                      </div>
                      
