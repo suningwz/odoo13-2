@@ -12,9 +12,9 @@ class GateEntryOut(models.Model):
     user_id = fields.Many2one("res.users","Security Name",default=lambda self: self.env.user)
     name = fields.Char("Sequence Number", required=True, copy=False, index=True,default =lambda self: _('New'))
     date = fields.Datetime("Entry Date")
-    supplier_id = fields.Many2one("res.partner", "Customer Name")
-    supplier_phone = fields.Char("Customer Contact Number", related='supplier_id.phone')
-    supplier_email = fields.Char("Customer Email", related='supplier_id.email')
+    partner_id = fields.Many2one("res.partner", "Customer Name")
+    partner_phone = fields.Char("Customer Contact Number", related='partner_id.phone')
+    partner_email = fields.Char("Customer Email", related='partner_id.email')
     stock_picking_id = fields.Many2one("stock.picking","Dispatch No")
     stock_picking_date = fields.Datetime("Dispatch Date")
     #stock_move_id = fields.
@@ -45,7 +45,7 @@ class GateEntryOut(models.Model):
     def on_change_select(self):
         values = {
             'stock_picking_date': self.stock_picking_id.scheduled_date or False, 
-            'supplier_id': self.stock_picking_id.partner_id and self.stock_picking_id.partner_id.id or False, 
+            'partner_id': self.stock_picking_id.partner_id and self.stock_picking_id.partner_id.id or False, 
             'origin': self.stock_picking_id.origin or False,
         }
         self.update(values)
