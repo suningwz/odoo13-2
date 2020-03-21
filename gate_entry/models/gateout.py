@@ -12,11 +12,11 @@ class GateEntryOut(models.Model):
     user_id = fields.Many2one("res.users","Security Name",default=lambda self: self.env.user)
     name = fields.Char("Sequence Number", required=True, copy=False, index=True,default =lambda self: _('New'))
     date = fields.Datetime("Entry Date")
-    supplier_id = fields.Many2one("res.partner", "Supplier Name")
-    supplier_phone = fields.Char("Supplier Contact Number", related='supplier_id.phone')
-    supplier_email = fields.Char("Supplier Email", related='supplier_id.email')
-    stock_picking_id = fields.Many2one("stock.picking","Challan No")
-    stock_picking_date = fields.Datetime("Challan Date")
+    supplier_id = fields.Many2one("res.partner", "Customer Name")
+    supplier_phone = fields.Char("Customer Contact Number", related='supplier_id.phone')
+    supplier_email = fields.Char("Customer Email", related='supplier_id.email')
+    stock_picking_id = fields.Many2one("stock.picking","Dispatch No")
+    stock_picking_date = fields.Datetime("Dispatch Date")
     #stock_move_id = fields.
     stock_picking_line_ids = fields.One2many(
         "stock.move.inherit.out", "gate_out_id", "Item Description")
