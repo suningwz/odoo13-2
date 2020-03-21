@@ -32,6 +32,10 @@
                        <strong>Source Doc: </strong><t t-if="o.origin">
                        <span t-field="o.origin"/></t>
                      </div><br/>  
+                       <div >
+                       <strong>Warehouse: </strong><t t-if="o.location_type_id">
+                       <span t-field="o.location_type_id"/></t>
+                     </div><br/>
                     </div><!--end of wrapper1-->
                     <div class="col-xs-6 ; text-right" style="color: #6B6C6C "><!--start of wrapper2-->
                     <div class="col-xs-10 " style="margin-left:280px">
@@ -39,14 +43,11 @@
                        <strong>Gate Date: </strong><t t-if="o.date">
                        <span t-field="o.date"/></t>
                      </div><br/>
-                     <strong>Supplier Name and address:</strong>
-                         <div t-if="o.supplier_id">
-                         <div t-field="o.supplier_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                     <strong>Customer Name and address:</strong>
+                         <div t-if="o.partner_id">
+                         <div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
                            </div><br/>
-                       <div >
-                       <strong>Warehouse: </strong><t t-if="o.location_type_id">
-                       <span t-field="o.location_type_id"/></t>
-                     </div><br/>   
+                          
                      </div>
                      
                      <br/><br/><br/>
