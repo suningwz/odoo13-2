@@ -6,46 +6,57 @@
             <field name="model">gate.in</field>
             <field name="arch" type="xml">
                  <form name="gate_pass_info" string="Gatepass Details">
+                   <header>
+                      <button name="action_confirm"
+                        string="Confirm" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                      <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
                      <div class="oe_title">
                         <h1>
                             <field name="name" readonly="1"/>
                         </h1>
                     </div>
-                     <group col="4" colspan="4">
-                        <field name="user_id"/>
-                        <field name="date"/>
-                        <field name="stock_picking_id" domain="[('picking_type_code','=','incoming')]"/>
-                        <field name="supplier_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}'/>
-                        <field name="stock_picking_date"/>
-                        <field name="supplier_phone"/>
-                        <field name="supplier_email"/>
-                        <field name="origin"/>
+                     <group col="4" colspan="4" >
+                        <field name="user_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="supplier_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True,"no_create": True}' attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        <field name="invoice_type" widget="radio" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="stock_picking_id" domain="['&amp;',('picking_type_code','=','incoming'),('partner_id', '=', supplier_id),('state', '!=', 'done'),('state', '!=', 'cancel')]" attrs="{'readonly': [('state', '!=', 'draft')]}" options='{"no_create": True}'/>
+                        <field name="supplier_inv_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="stock_picking_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="supplier_phone" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <!--<field name="purchase_id" domain="[('partner_id', '=', supplier_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+                        <field name="supplier_email" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="origin" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                      </group>
                      <notebook>
                        <page string="Item Description">
-                         <field name="stock_picking_line_ids">
-                            <tree editable="bottom">
-                              <field name="product_id"/>
+                         <field name="stock_picking_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="bottom" create="false">
+                              <field name="stock_id" invisible="True"/>
+                              <field name="product_id"/> 
                               <field name="product_uom"/>
                               <field name="product_qty"/>
                               <field name="product_done_qty"/>
                             </tree>
                          </field>
                          <group col="4" colspan="4">
-                             <field name="vehicle_no" />
-                             <field name="vehicle_driver_name"/>
-                             <field name="driver_contact_number"/>
+                             <field name="vehicle_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                             <field name="vehicle_driver_name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                             <field name="driver_contact_number" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <!-- <field name="corresponding_company"/>-->
                          </group>
-                         <group><field name="notes" class="oe_inline" placeholder="Define your notes ..."/></group>
+                         <group><field name="notes" class="oe_inline" placeholder="Define your notes ..." attrs="{'readonly': [('state', '!=', 'draft')]}"/></group>
                        </page>
                        <page string="Additonal Info">
                         <group col="4" colspan="4">
-                         <field name="location_type_id"/>
-                        <field name="dest_location_id"/>
+                         <field name="location_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="dest_location_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                        </page>
-                     </notebook>
+                     </notebook> </sheet>
                  </form>
             </field>
          </record>
@@ -70,6 +81,23 @@
             <field name="domain">[]</field>
             
         </record>
+        
+        <record model="ir.ui.view" id="gate_slip_view">
+            <field name="name">Stock picking Inherit gate</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[3]/field[@name='move_ids_without_package']/tree[1]/field[@name='product_uom_qty']" position="after">
+                    <field name="received_qty" attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'incoming')]}"/>
+                 </xpath>
+                 <xpath expr="//field[@name='origin']" position="after">
+                    <field name="gate_entry_id" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+                 </xpath>
+            </field>
+         </record>
+        
+        
+        
         <menuitem id="gate" name="Gate Entry"/>
         <menuitem id="gate_root" name="Gate Entries" parent="gate"/>
         <menuitem id="gate_in" name="Gate In" parent="gate_root"
