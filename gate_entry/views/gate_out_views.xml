@@ -5,26 +5,33 @@
             <field name="name">gate out entry</field>
             <field name="model">gate.out</field>
             <field name="arch" type="xml">
-                 <form name="gate_out_pass_info" string="Gatepass Details">
+                 <form name="gate_out_pass_info" string="Gateout Details">
+                     <header>
+                      <button name="action_confirm"
+                        string="Confirm" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                      <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
                      <div class="oe_title">
                         <h1>
                             <field name="name" readonly="1"/>
                         </h1>
                     </div>
                      <group col="4" colspan="4">
-                        <field name="user_id"/>
-                        <field name="date"/>
-                        <field name="stock_picking_id" domain="[('picking_type_code','=','outgoing')]"/>
-                        <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}'/>
-                        <field name="stock_picking_date"/>
-                        <field name="partner_phone"/>
-                        <field name="partner_email"/>
-                        <field name="origin"/>
+                        <field name="user_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True,"no_create": True}' attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="partner_phone" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="stock_picking_id" domain="['&amp;',('picking_type_code','=','outgoing'),('state', '!=', 'done'),('state', '!=', 'cancel')]" options='{"no_create": True}' attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="partner_email" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="stock_picking_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="origin" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                      </group>
                      <notebook>
                        <page string="Item Description">
-                         <field name="stock_picking_line_ids">
-                            <tree editable="bottom">
+                         <field name="stock_picking_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="bottom" create="false">
                               <field name="product_id"/>
                               <field name="product_uom"/>
                               <field name="product_qty"/>
@@ -32,20 +39,20 @@
                             </tree>
                          </field>
                          <group col="4" colspan="4">
-                             <field name="vehicle_no" />
-                             <field name="vehicle_driver_name"/>
-                             <field name="driver_contact_number"/>
+                             <field name="vehicle_no" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                             <field name="vehicle_driver_name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                             <field name="driver_contact_number" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <!-- <field name="corresponding_company"/>-->
                          </group>
                          <group><field name="notes" class="oe_inline" placeholder="Define your notes ..."/></group>
                        </page>
                        <page string="Additonal Info">
                         <group col="4" colspan="4">
-                         <field name="location_type_id"/>
-                        <field name="location_id"/>
+                         <field name="location_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="location_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                        </page>
-                     </notebook>
+                     </notebook> </sheet>
                  </form>
             </field>
          </record>
@@ -67,9 +74,22 @@
             <field name="res_model">gate.out</field>
             <field name="type">ir.actions.act_window</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[]</field>
-            
+            <field name="domain">[]</field>   
         </record>
+        
+        <record model="ir.ui.view" id="gateout_slip_view">
+            <field name="name">Stock picking out Inherit gate</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                 <!--<xpath expr="//form[1]/sheet[1]/notebook[1]/page[3]/field[@name='move_ids_without_package']/tree[1]/field[@name='product_uom_qty']" position="after">
+                    <field name="received_qty" attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'outgoing')]}"/>
+                 </xpath>-->
+                 <xpath expr="//field[@name='origin']" position="after">
+                    <field name="gateout_entry_id" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                 </xpath>
+            </field>
+         </record>
         
         <menuitem id="gate_out" name="Gate Out" parent="gate_entry.gate_root"
                   action="gate_out_action" sequence="3"/>
