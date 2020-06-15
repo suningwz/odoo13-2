@@ -31,6 +31,17 @@ class GateEntryOut(models.Model):
         'stock.location', "Source Location")
     notes = fields.Text('Notes')
     
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirm', 'Confirmed'),
+        ], string='Status', readonly=True, copy=False, index=True, default='draft')
+    
+    ## confirm button
+    def action_confirm(self):
+        res = self.env['stock.picking'].search([('name', '=' , self.stock_picking_id.name)])
+        res.write({'gateout_entry_id': self.id})
+        return self.write({'state': 'confirm'})
+    
     ## Auto sequence
     
     @api.model
@@ -85,24 +96,7 @@ class StockPickingInherit(models.Model):
     product_uom = fields.Char(
         'UoM')
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+class GatePassStockInherit(models.Model):
+    _inherit = 'stock.picking'
+
+    gateout_entry_id = fields.Many2one("gate.out", "Gate Out Entry",copy=False, index=True)
