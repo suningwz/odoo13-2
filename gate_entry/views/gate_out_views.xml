@@ -90,7 +90,6 @@
                  </xpath>
             </field>
          </record>
-        
         <menuitem id="gate_out" name="Gate Out" parent="gate_entry.gate_root"
                   action="gate_out_action" sequence="3"/>
     </data>
