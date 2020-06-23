@@ -95,9 +95,7 @@
                  </xpath>
             </field>
          </record>
-        
-        
-        
+
         <menuitem id="gate" name="Gate Entry"/>
         <menuitem id="gate_root" name="Gate Entries" parent="gate"/>
         <menuitem id="gate_in" name="Gate In" parent="gate_root"
