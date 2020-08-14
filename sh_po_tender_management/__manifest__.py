@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-# Part of Softhealer Technologies.
+
 {
     "name" : "Purchase Tender Management",
-    "author" : "Softhealer Technologies",
-    "website": "https://www.softhealer.com",
-    "support": "support@softhealer.com",
     "category": "Purchases",
     "summary": " Manage Multiple Tenders, Multiple Tender  Single List Module, Multiple Tenders Request For Quotation Manage, Same Partner Tender Management App, Purchase Tender Management, PO Tender Management Odoo.",
     "description": """
@@ -36,9 +33,6 @@
             'wizard/sh_purchase_order_wizard_view.xml',
             ],
     "images": ["static/description/background.png", ],
-    "live_test_url": "https://youtu.be/U11c99oX-m0",
     "auto_install":False,
     "installable" : True,
-    "price": 60,
-    "currency": "EUR"
 }
