@@ -5,6 +5,7 @@ Nowadays in a competitive market, several vendors sell the same products and eve
 User Guide
 ============
 Blog: https://www.softhealer.com/blog/odoo-2/post/purchase-tender-management-372
+Product: /shop/product/purchase-tender-management-373
 
 Installation
 ============

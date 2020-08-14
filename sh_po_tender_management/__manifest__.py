@@ -35,4 +35,5 @@
     "images": ["static/description/background.png", ],
     "auto_install":False,
     "installable" : True,
+   
 }

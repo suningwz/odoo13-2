@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="quality_revision_form" model="ir.ui.view">
+        <field name="name">quality.point.revision.view.form</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality.quality_point_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet" position="before">
+               <header>
+                <button name="new_revision" string="New revision" type="object" />
+            </header></xpath>
+            <!--attrs="{'invisible': ['|',('state', '!=', 'cancel'),('current_revision_id','!=', False)]}" -->
+            <!--<button name="button_draft" position="attributes" >
+                <attribute name="invisible">1</attribute>
+            </button>-->
+            <notebook position="inside">
+                <page string="Revisions">
+                    <field name="old_revision_ids"/>
+                    <group attrs="{'invisible': [('active', '=', True)]}">
+                        <field name="current_revision_id"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    
+
+</odoo>
