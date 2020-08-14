@@ -17,7 +17,7 @@
 
 
                     """,
-    "version":"13.0.2",
+    "version":"13.0.4",
     "depends" : ["base","purchase", "stock", "account","mail","portal","utm"],
     "application" : True,
     "data" : [
@@ -29,6 +29,7 @@
             'views/sh_purchase_agreement_view.xml',
             'views/sh_bidline_view.xml',
             'views/sh_report_purchase_tender_template.xml',
+            'views/report_analyze_quotations.xml',
             'views/report_views.xml',
             'data/sh_purchase_tender_email_data.xml',
             'wizard/sh_update_qty_wizard_view.xml',
