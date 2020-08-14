@@ -9,5 +9,13 @@
             name="sh_po_tender_management.report_purchasetender" 
             file="sh_po_tender_management.report_purchasetender"
         />
+     <report 
+            string="Analyze Quotations" 
+            id="action_report_analyze_quotations" 
+            model="purchase.agreement" 
+            report_type="qweb-pdf"
+            name="sh_po_tender_management.report_analyze_quotations" 
+            file="sh_po_tender_management.report_analyze_quotations"
+        />
   </data>
 </odoo>
