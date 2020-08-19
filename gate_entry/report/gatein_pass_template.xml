@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_gateinpass_slip">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                  <div class="page">
+                   <center style="border:1px; border-style:solid; border-color:#C0C0C0; border-radius: 5px;">
+                    <h2>GATE IN</h2>
+                   </center>
+                   <br/><br/>
+                   
+                   <div class="col-xs-6;text-right" style="color: #6B6C6C "><!--startofwrapper1-->        
+                   <div class="col-xs-12 pull-left">
+                     <div >
+                       <strong>Gate Entry: </strong><t t-if="o.name">
+                       <span t-field="o.name"/></t>
+                     </div><br/>
+                     <div >
+                       <strong>Security Name: </strong><t t-if="o.user_id.name">
+                       <span t-field="o.user_id.name"/></t>
+                     </div><br/> 
+                     <div >
+                       <strong>Challan No: </strong><t t-if="o.stock_picking_id">
+                       <span t-field="o.stock_picking_id"/></t>
+                     </div><br/>
+                     <div >
+                       <strong>Challan Date: </strong><t t-if="o.stock_picking_date">
+                       <span t-field="o.stock_picking_date"/></t>
+                     </div><br/>
+                     <div >
+                       <strong>Source Doc: </strong><t t-if="o.origin">
+                       <span t-field="o.origin"/></t>
+                     </div><br/> 
+                       <div >
+                     <strong>Warehouse: </strong><t t-if="o.location_type_id">
+                       <span t-field="o.location_type_id"/></t>
+                     </div><br/>    
+                    </div><!--end of wrapper1-->
+                    <div class="col-xs-6 ; text-right" style="color: #6B6C6C "><!--start of wrapper2-->
+                    <div class="col-xs-10 " style="margin-left:280px">
+                     <div >
+                       <strong>Gate Date: </strong><t t-if="o.date">
+                       <span t-field="o.date"/></t>
+                     </div><br/>
+                     <strong>Supplier Name and address:</strong>
+                         <div t-if="o.supplier_id">
+                         <div t-field="o.supplier_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                           </div><br/>
+                      
+                       
+                     </div>
+                     
+                     <br/><br/><br/>
+                     </div>
+                    </div><!--end of wrapper2-->
+                    
+                   <table class="table  table-bordered ; table-layout: fixed;">
+                     
+                        <tr style="color: #6B6C6C">
+                            <th class="text-center"> #</th>
+                            <th class="text-center"> Order Description</th>
+                            <th class="text-center"> Unit</th>
+                            <th class="text-center"> Challan Qty</th>
+                            <th class="text-center"> Received Qty</th>                          
+                            <th class="text-center"> Short Excess Qty</th>
+                        </tr>
+                        <t t-foreach="o.stock_picking_line_ids" t-as="l">
+                            <tr style="color: #6B6C6C ;height:2px;">
+                              <td class="text-center" style="padding:5px; margin:5px;"><span t-esc="l_index + 1"/></td>
+                              <td class="text-center" style="padding:5px; margin:5px;"><span t-field="l.product_id.default_code"/> <span t-field="l.product_id.name"/></td>
+                              <td class="text-center" style="padding:5px; margin:5px;"><span t-field="l.product_uom"/></td>
+                              <td class="text-center" style="padding:5px; margin:5px;"><span t-field="l.product_qty"/></td>
+                              <td class="text-center" style="padding:5px; margin:5px;"><span t-field="l.product_done_qty"/></td>
+                              <td class="text-center" style="padding:5px; margin:5px;"></td>
+                            </tr>
+                        </t>
+                   
+                </table><br/>
+                  <table class="table  table-bordered ; table-layout: fixed;">
+                            <thead >
+                                <tr style="color: #6B6C6C">
+                                     <t t-if="o.vehicle_no">
+                                    <th class="text-center" style="color: #6B6C6C">Vehicle Number</th>
+                                     </t>
+                                    <t t-if="o.vehicle_driver_name">
+                                    <th class="text-center" style="color: #6B6C6C">Driver Name</th>
+                                    </t>
+                                    <t t-if="o.driver_contact_number">
+                                    <th class="text-center" style="color: #6B6C6C">Driver Contact No</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="color: #6B6C6C ;height:2px;">
+                                    <td class="text-center" style="padding:5px; margin:5px;" t-if="o.vehicle_no">
+                                        <span t-field="o.vehicle_no"/>
+                                    </td>
+                                    <td class="text-center" style="padding:5px; margin:5px;" t-if="o.vehicle_driver_name">
+                                        <span t-field="o.vehicle_driver_name"/>
+                                    </td>
+                                    <td class="text-center" style="padding:5px; margin:5px;" t-if="o.driver_contact_number">
+                                        <span t-field="o.driver_contact_number"/>
+                                    </td>
+                                     <!--<td style="padding:5px; margin:5px;" t-if="o.corresponding_company">
+                                        <span t-field="o.corresponding_company"/>
+                                    </td>
+                                    <td style="padding:5px; margin:5px;">
+                                        <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+                                    </td>
+                                    <td style="padding:5px; margin:5px;">
+                                        <span t-esc="datetime.datetime.now().strftime('%H:%M:%S %p')"/>
+                                    </td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div t-if="o.notes" style="color: #6B6C6C "><br/>
+                        <p>Notes:</p>
+                       <span t-field="o.notes"/>
+                        </div>
+                        <div class="pull-right" style="color: #6B6C6C "><br/><br/><br/><br/>
+                        <p>Authorised By</p>
+                        </div>
+                   </div><!--page-->
+                </t>
+            </t>
+        </t>
+    </template>
+
+    
+</odoo>

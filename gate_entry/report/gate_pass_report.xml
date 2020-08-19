@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="gateinpass_slip_format" model="report.paperformat">
+            <field name="name">Gate In Pass</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">150</field>
+            <field name="page_width">240</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+        <report
+            string="Gate In Pass"
+            id="action_gatepass_generate"
+            model="gate.in"
+            report_type="qweb-pdf"
+            name="gate_entry.report_gateinpass_slip"
+            file="gate_entry.report_gateinpass_slip"
+            />
+            
+        <record id="gateoutpass_slip_format" model="report.paperformat">
+            <field name="name">Gate Out Pass</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">150</field>
+            <field name="page_width">240</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+        <report
+            string="Gate Out Pass"
+            id="action_gateoutpass_generate"
+            model="gate.out"
+            report_type="qweb-pdf"
+            name="gate_entry.report_gateoutpass_slip"
+            file="gate_entry.report_gateoutpass_slip"
+            />
+    </data>
+</odoo>
