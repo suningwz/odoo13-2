@@ -47,11 +47,11 @@ class PurchaseOrder(models.Model):
         
        
         
-#class AccountMoveInherit(models.Model):
- #   _inherit = 'account.move'
+class AccountMoveInherit(models.Model):
+    _inherit = 'account.move'
 
 
-  #  order_type = fields.Many2one(comodel_name='purchase.order.type',
-   #                              readonly=False,
-    #                             related='purchase_id.order_type',
-     #                            string='Type')
+    order_type = fields.Many2one(comodel_name='purchase.order.type',
+                                 readonly=False,
+                                 related='purchase_id.order_type',
+                                 string='Type')
