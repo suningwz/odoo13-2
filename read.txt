@@ -1,6 +1,0 @@
-My first access to fit through Command line
-text added in github.Need to pull to local machine
-Sucess 
-tested push and pull request in command line
-acknowleged
-testing with different user name
