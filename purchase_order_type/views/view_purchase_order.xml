@@ -34,7 +34,7 @@
             </group>
         </field>
     </record>
-    <!--Invoice -->
+    <!--Invoice 
     
     <record id="account_form" model="ir.ui.view">
         <field name="model">account.move</field>
@@ -68,4 +68,5 @@
                         domain="[]" context="{'group_by': 'order_type'}"/>
             </group>
         </field>
-    </record> </odoo>
+    </record> -->
+</odoo>
