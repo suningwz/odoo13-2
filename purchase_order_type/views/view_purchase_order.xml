@@ -36,8 +36,27 @@
     </record>
     <!--Invoice -->
     
+    <record id="account_form" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.account.move.form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="order_type" required="True"/>
+            </field>
+        </field>
+    </record>
     
-   <!-- <record id="view_purchase_order_filter" model="ir.ui.view">
+    <record id="account_tree" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.account.move.form"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="order_type" invisible="context.get('group_by') == 'order_type'"/>
+            </field>
+        </field>
+    </record>
+    
+    <record id="view_account_filter" model="ir.ui.view">
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.account.move.form"/>
         <field name="arch" type="xml">
@@ -49,6 +68,4 @@
                         domain="[]" context="{'group_by': 'order_type'}"/>
             </group>
         </field>
-    </record> -->
-
-</odoo>
+    </record> </odoo>
