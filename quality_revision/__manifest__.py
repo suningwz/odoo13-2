@@ -9,7 +9,7 @@
     "application" : True,
     "data": [
         'views/quality_views.xml',
-        #'views/qc_purchase_views.xml',
+        'views/quality_check_views.xml',
     ],
     #"images": ["static/description/background.png", ],
     "post_init_hook": "post_init_hook",

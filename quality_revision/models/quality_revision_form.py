@@ -20,7 +20,7 @@ class QualityPoint(models.Model):
     )
     revision_number = fields.Integer(
         string='Revision',
-        copy=False,
+        default = 1,
     )
     unrevisioned_name = fields.Char(
         string='Order Reference',
@@ -32,11 +32,7 @@ class QualityPoint(models.Model):
         default=True,
     )
 
-    _sql_constraints = [
-        ('revision_unique',
-         'unique(unrevisioned_name, revision_number, company_id)',
-         'Order Reference and revision must be unique per Company.'),
-    ]
+    
     
     #_sql_constraints = [
      #   ('name_uniq',
@@ -44,33 +40,28 @@ class QualityPoint(models.Model):
        # 'You can not create two quality check point for same Product !'),
     #]
 
-    def new_revision(self):
-        #self.ensure_one()
-        old_name = self.name
-        revno = self.revision_number
-        self.write({'name': '%s-%02d' % (self.unrevisioned_name,
-                                         revno + 1),
-                    'revision_number': revno + 1})
-        for i in self:          
-            defaults = {'name': old_name,
-                        'revision_number': revno + i.id,
-                        'active': False,
-                        #'state': 'cancel',
-                        'current_revision_id': self.id,
-                        'unrevisioned_name': self.unrevisioned_name,
-                        }
-        old_revision = super(QualityPoint, self).copy(default=defaults)
-        #self.button_draft()
-        msg = _('New revision created: %s') % self.name
-        self.message_post(body=msg)
-        old_revision.message_post(body=msg)
-        return True
     
-    @api.model
-    def create(self, vals):
-        if 'revision_number' not in vals or vals['revision_number'] == '/':
-            vals['revision_number'] = self.env['ir.sequence'].next_by_code('quality.point') or '/'
-        return super(QualityPoint, self).create(vals)
+    def new_revision(self):
+        for cur_rec in self:
+            old_name = self.name
+            self.write({'name': '%s-%02d' % (cur_rec.unrevisioned_name,
+                                         cur_rec.revision_number ),
+                    'revision_number': cur_rec.revision_number})
+            
+            #cur_rec.name = str(cur_rec.unrevisioned_name) +' - '+ str(cur_rec.revision_number)
+            vals = {
+                'name': old_name,
+                'active': False,
+                'revision_number': cur_rec.revision_number,
+                'current_revision_id': cur_rec.id,
+                'unrevisioned_name': self.unrevisioned_name,
+            }
+            cur_rec.copy(default=vals)
+            cur_rec.state = 'draft'
+#             so_copy.is_revision_quote = True
+            cur_rec.revision_number += 1
+    
+    
     
     @api.model
     def create(self, values):

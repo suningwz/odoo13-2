@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="purchase_order_custom_form" model="ir.ui.view">
+      <field name="name">purchase.order.form</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='incoterm_id']" position="after">
+            <field name="delivery_schedule_id" attrs="{&quot;readonly&quot;: [&quot;|&quot;,[&quot;invoice_status&quot;,&quot;=&quot;,&quot;invoiced&quot;],[&quot;state&quot;,&quot;=&quot;,&quot;done&quot;]]}"/>
+            <label for="warranty"/>
+                <div class="o_row" name="warranty">
+                    <field name="warranty"/>
+                    <field name="warranty_term"/>
+               </div>
+        </xpath>
+        <xpath expr="//field[@name='notes']" position="attributes">
+            <attribute name="placeholder">Define your packing instructions ...</attribute>
+        </xpath>
+        <xpath expr="//field[@name='picking_count']" position="attributes">
+            <attribute name="string">GRN</attribute>
+        </xpath>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="gate_in_view_form">
+            <field name="name">delivery schedule</field>
+            <field name="model">delivery.schedule</field>
+            <field name="arch" type="xml">
+                 <form>
+                    <sheet string="Delivery Schedule">
+                        <!--<div class="oe_title">
+                              <h1>
+                                <field name="x_name" required="1"/>
+                              </h1>
+                        </div>-->
+                    <group name="studio_group_ebcc3d">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <!--<group name="studio_group_ebcc3d_left"/>
+                        <group name="studio_group_ebcc3d_right"/>-->
+                    </group>
+                   </sheet>
+                </form>
+             </field>
+       </record>
+         <record model="ir.actions.act_window" id="delivery_schedule_action">
+            <field name="name">Delivery Schedule</field>
+            <field name="res_model">delivery.schedule</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            
+        </record>
+        <menuitem id="delivery_schedule" name="Delivery Schedule" parent="purchase.menu_purchase_config"
+                  action="delivery_schedule_action" />
+  </data>
+</odoo>

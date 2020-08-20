@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_purchaseorder_template" inherit_id="purchase.report_purchaseorder_document">
+		<xpath expr="/t/t/div/div[4]" position="after">
+               	<br/><br/>
+               	<table class="table table-sm o_main_table">
+		             <thead>
+		                <tr>
+		                   <th>Quality Revision Number</th>
+		                   <th >Quality Check Number</th>
+		                   <th >Product</th>
+		                   <th >Type</th>
+		                   <th >Specification</th>
+		                   <th >Min</th>
+		                   <th >Max</th>
+		                   <th >Actual</th>
+		                   
+		                   
+		                 </tr>
+		               <t t-foreach="quality" t-as="line">
+		               <t t-set="style" t-value="''"/>
+		                 <tr t-att-style="style">
+		                   <td >
+		                     <span t-esc="line.control_point"/>
+		                   </td>
+		                   <td >
+		                     <span t-esc="line.name"/>
+		                   </td>
+		                   <td >
+		                     <span t-esc="line.product_id.name"/>
+		                   </td>
+		                   <td >
+                             <span t-esc="line.quality_point_type"/>
+		                   </td>
+		                   <t t-if="line.quality_point_type == 'Measure'">
+		                   <td >
+                             <span t-esc="line.norm"/> <span t-esc="line.norm_unit"/> 
+		                   </td></t>
+		                   <t t-if="line.quality_point_type == 'Measure'">
+		                    <td >
+                             <span t-esc="line.tolerance_min"/>
+		                    </td>
+		                   </t>
+		                   <t t-if="line.quality_point_type == 'Measure'">
+		                    <td >
+                             <span t-esc="line.tolerance_max"/>
+		                    </td>
+		                   </t>
+		                   <t t-if="line.quality_point_type == 'Measure'">
+		                    <td >
+                             <span t-esc="line.measure"/>
+		                    </td>
+		                   </t>
+		                  </tr>
+		                </t>
+		            </thead>
+		      </table>
+		</xpath>
+	</template>
+	<template id="report_purchaseorder">
+	    <t t-call="web.html_container">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="po_custom_report.report_purchaseorder_template"/>
+	        </t>
+	    </t>
+	</template>
+</odoo>

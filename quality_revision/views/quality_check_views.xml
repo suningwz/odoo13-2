@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="qc_inherit_form" model="ir.ui.view">
+        <field name="name">qc inherit form</field>
+        <field name="model">quality.check</field>
+			<field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+			<field name="arch" type="xml">
+                 <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="quality_point_specification" string="Quality Point Specification">
+                        <group>
+                            <group >
+                               <field name="control_point"/>
+                            </group>
+                            <group >
+                                <field name="quality_point_type"/>
+                                <label for="norm" string="Norm" attrs="{'invisible': [('quality_point_type', '!=', 'Measure')]}"/>
+                                    <div class="o_row" attrs="{'invisible': [('quality_point_type', '!=', 'Measure')]}">
+                                      <field name="norm"/>
+                                      <field name="norm_unit"/>
+                                    </div>
+                                <label for="tolerance_min" string="Tolerance" attrs="{'invisible': [('quality_point_type', '!=', 'Measure')]}"/>
+                                <div class="o_row" attrs="{'invisible': [('quality_point_type', '!=', 'Measure')]}">
+                                  <span>from </span> <field name="tolerance_min"/>
+                                  <span>to </span> <field name="tolerance_max"/>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>           
+        </field>
+    </record>
+
+</odoo>
+
+

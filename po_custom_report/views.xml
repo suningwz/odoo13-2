@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="quality_form_inherit" model="ir.ui.view">
+        <field name="name">quality.check.view.form.inherit</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="purchase_id"/>
+            </xpath>
+        </field>
+    </record>
+    
+    
+
+</odoo>
