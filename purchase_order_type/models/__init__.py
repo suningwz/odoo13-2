@@ -1,3 +1,3 @@
 from . import purchase_order_type
-from . import purchase_order
+from . import models
 from . import res_partner

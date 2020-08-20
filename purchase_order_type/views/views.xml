@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="order_type" required="True"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="purchase_order_tree" model="ir.ui.view">
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="order_type" invisible="context.get('group_by') == 'order_type'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_filter" model="ir.ui.view">
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="order_type"/>
+            </field>
+            <group position="inside">
+                <filter string="Type" name="order_type"
+                        domain="[]" context="{'group_by': 'order_type'}"/>
+            </group>
+        </field>
+    </record>
+    <!--Invoice -->
+    
+    <record id="account_form" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="order_type"  />
+            </field>
+        </field>
+    </record>
+    
+   <!--<record id="account_tree" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="order_type" invisible="context.get('group_by') == 'order_type'"/>
+            </field>
+        </field>
+    </record> 
+    
+    <record id="view_account_filter" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='status']" position="after">
+                <filter context="{'group_by': 'order_type'}" name="group_by_type" string="Order Type"/>
+            </xpath>
+        </field>
+    </record> -->
+    
+    <!--Stock -->
+    
+    <record id="stock_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="picking_type_id" position="after">
+                <field name="order_type_receipt" required="True" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+            </field>
+        </field>
+    </record>
+    
+    <record id="view_stock_receipt_filter" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='status']" position="after">
+                 <filter context="{'group_by': 'order_type_receipt'}" name="group_by_receipt_type" string="Receipt Type"/>
+            </xpath>
+         </field>
+    </record>
+    
+    <!--<record id="stock_picking_tree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="order_type_receipt" invisible="context.get('group_by') == 'order_type_receipt'"/>
+            </field>
+        </field>
+    </record> -->
+
+</odoo>
